@@ -1,0 +1,57 @@
+﻿﻿@model IList<CustomLogin.Models.student_course>
+@{
+    ViewBag.Title = "subscibedStudents";
+}
+
+<h2>MyCourses</h2>
+
+
+
+@Html.Hidden("GetSubscibedStudent", Url.Action("GetSubscibedStudent", "course"))
+
+
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        var com = $.connection.friendsHub;
+
+        com.client.displayfriends = function () {
+            getData();
+        };
+
+        $.connection.hub.start();
+        getData();
+    });
+    function getData() {
+        var $tbl = $("#tblInfo");
+        $.ajax({
+            url: $("#GetSubscibedStudent").val(),
+            type: "GET",
+            datatype: "json",
+            success: function (data) {
+                $tbl.empty();
+                $.each(data.list, function (i, model) {
+                    $tbl.append
+                        (
+                        "<dt>" +
+                            '<tr>' +
+                            ' <a class="carousel-control-next" href="' + model.CourseSyllabus + '" role="button" data-slide="next">' +
+                            ' <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+                            ' <span class="sr-only">Read Course syllabus</span>' +
+                            '</tr>' +
+                           '<div >' + model.Username +'</div>'
+                              
+                        );
+                });
+            }
+        });
+    }
+</script>
+
+
+<table class="table" id="tblInfo"></table>

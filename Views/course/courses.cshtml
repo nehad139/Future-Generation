@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "courses";
+}
+
+<h2>courses</h2>
+
+
+@Html.Hidden("Getcourse", Url.Action("Getcourse", "course"))
+
+
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+
+<script type="text/javascript">
+        $(function () {
+            // Proxy created on the fly
+            var post = $.connection.postHub;
+            // Declare a function on the job hub so the server can invoke it
+            post.client.displayPost = function () {
+                getData();
+            };
+            // Start the connection
+            $.connection.hub.start();
+            getData();
+        });
+        function getData() {
+            var $tbl = $("#tblInfo");
+
+            $.ajax({
+                url: $("#Getcourse").val(),
+                type: "GET",
+                datatype: "json",
+                success: function (data) {
+                    $tbl.empty();
+                    $.each(data.courselist, function (i, model) {
+                        $tbl.append
+                            (
+                            "<div>"+
+                               "<dt>" +
+                                model.courseName +
+                                '</dt>'+
+                                "<dt>" + "cost:" +
+                                model.cost +
+                                '</dt>' +
+                                "<dt>" + "Capacity:" +
+                                model.Capacity +
+                                '</dt>' +
+                                "<dt>" + "Status:" +
+                                model.Status +
+                                '</dt>' +
+                                "<dt>" + "startDate" +
+                                model.startDate +
+                                '</dt>' +
+                                "<dt>" + "endDate:" +
+                                model.endDate +
+                                '</dt>' +
+                                '<dt>' +
+                                '<table class="table">' +
+                                '<tr>' + '<th>' +
+
+
+                                '<input type="hidden" name="courseID" value="' + model.courseID + '"/>' +
+                                '</tr>' +
+                                '</table>' +
+                                "</dt>" +
+                               ' <a class="carousel-control-next" href="'+model.courseSyllaby+'" role="button" data-slide="next">'+
+                                   ' <span class="carousel-control-next-icon" aria-hidden="true"></span>'+
+                                ' <span class="sr-only">Read Course syllabus</span>' +
+                                '<div>'+
+                                ' <a class="carousel-control-next" href="/course/subs/' + model.courseID + '" role="button" data-slide="next">' +
+                                ' <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+                                ' <span class="sr-only">subscribe</span>' +
+                                ' </a>' +
+                                "</div>" +
+                                "</div>" +
+                            "</div>"
+                            );
+                    });
+                }
+            });
+        }
+</script>
+
+<table class="table">
+
+
+    <tbody id="tblInfo"></tbody>
+</table>
+
+
+

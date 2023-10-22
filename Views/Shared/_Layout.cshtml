@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href=@Url.Content("/mylay/Style.css")>
+    <meta charset="utf-8" />
+    <title>@Page.Title</title>
+    @RenderSection("head", required: false)
+
+    <script type="text/javascript" src="js.js"></script>
+
+    <script>
+
+        if (localStorage.getItem("themeMode") == "dark") {
+            addCssDark();
+        } else {
+            localStorage.setItem("themeMode", "light");
+        }
+        function changeTheme() {
+            if (localStorage.getItem("themeMode") === "light") {
+                addCssDark();
+                localStorage.setItem("themeMode", "dark");
+            } else {
+                document.getElementById("masdark").remove();
+                document.getElementById("toggles").classList.remove("active");
+                localStorage.setItem("themeMode", "light");
+                document.getElementById("toggles").title = "Change to dark mode";
+            }
+        }
+        function addCssDark() {
+            document.head.innerHTML = document.head.innerHTML + '<style id="masdark">html, html * {color: #eeeeee !important; background-color:#0000 !important;} body{background-color:#292929  !important;} #toggles.active {background:rgba(26, 26, 26,0.8) !important;} .buttonheader a:link, a:visited {color:white !important; background-color: #1a1a1a !important;} .buttonheader{background-color:#1a1a1a !important;}  .buttonheader a:hover{background-color:#333333 !important; color: white !important; }  .right {background-color:rgba(26, 26, 26,0.8) !important;} .mid{background-color:rgba(26, 26, 26,0.8)  !important;} .createform{background-color:rgba(26, 26, 26,0.8) !important;} .loginform{background-color:rgba(26, 26, 26,0.8)  !important;}  input[type="submit"]{background-color: #4d4d4d !important;  border: 0.5px solid #ffff !important;}  input[type="password"]{background-color:#333333  !important;} input[type="text"]{background-color:#333333  !important;} input[type="email"]{background-color:#333333  !important;} input[type="date"]{background-color:#333333  !important;}</style>';
+            document.getElementById("toggles").classList.add("active");
+            document.getElementById("toggles").title = "Change to light mode";
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="buttonheader">
+                    <a>@Html.ActionLink("Future Generation", "courses", "course", new { area = "" }, new { @class = "navbar-brand" })</a>
+                    <a>@Html.ActionLink("MY Account", "Details", "UserAccounts")</a>
+                    <a>@Html.ActionLink("Courses", "courses", "course")</a>
+                    <a>@Html.ActionLink("Logout", "Login", "UserAccounts")</a>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id='toggles' onclick='changeTheme()' title='Change to dark mode'> 🌙 </div>
+
+    </ul>
+
+
+
+    
+    @RenderBody()
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "allstudents";
+}
+
+<h2>All the students</h2>
+
+@model CustomLogin.Models.UserAccount
+
+@{
+
+    ViewBag.Title = "UserAccounts";
+}
+@{
+    Layout = "~/Views/Shared/layout2.cshtml";
+}
+
+
+<head>
+    <style>
+        .nehal {
+            width: 30%;
+            height: 400px;
+            position: absolute;
+            text-align: center;
+            background-color: rgb(176, 190, 197);
+            padding: 40px;
+            top: 32%;
+            left: 30%;
+            border-radius: 25px;
+        }
+    </style>
+    <style>
+        .nehal1 {
+            position: absolute;
+            text-align: center;
+            padding: 40px;
+            top: 500px;
+            left: 625px;
+            border-radius: 25px;
+        }
+    </style>
+
+    <script>
+
+        function mOver(obj) {
+
+            obj.style = "color:#f0f3f5; border: 0.5px solid #3e4e5b; background-color:#1e5162; width: 202px; height: 29px; border-radius: 3px;"
+        }
+
+        function mOut(obj) {
+            obj.style = "color: #f0f3f5;border: 0.5px solid #3e4e5b; background - color: #566d7e;width: 200px;height: 27px;border - radius: 3px;"
+        }
+
+    </script>
+</head>
+
+
+
+<hr />
+
+
+@Html.Hidden("GetUseres", Url.Action("GetUseres", "UserAccounts"))
+
+
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        var com = $.connection.userHub1;
+
+        com.client.display = function () {
+            getData();
+        };
+
+        $.connection.hub.start();
+        getData();
+    });
+    function getData() {
+        var $tbl = $("#tblInfo9");
+        $.ajax({
+            url: $("#GetUseres").val(),
+            type: "GET",
+            datatype: "json",
+            success: function (data) {
+                $tbl.empty();
+                $.each(data.list, function (i, model) {
+                    $tbl.append
+                        (
+                        "<dt >" +
+                        "<img src=" + model.image + " style='width: 100px; border-radius: 50%;height: 100px;'/>" +
+
+                        "</dt>" +
+                        "<dt>" +
+                        model.FirstName +
+                        "</dt>" +
+                        "<dt>" +
+                        model.LastName +
+                        "</dt>" +
+                        "<dt>" +
+                        model.Email +
+                        "</dt>" +
+                        "<dt>" +
+                        model.Username +
+                        "</dt>" +
+                        "<dt>" +
+                        model.City +
+                        "</dt>" +
+                        "<dt>" +
+                        model.Country +
+                        "</dt>" +
+                        "<dt>" +
+                        model.mobile +
+                        "</dt>" +
+                        '<dt>' +
+                        ' <a class="carousel-control-next" href="/UserAccounts/delet/' + model.UserID + '" role="button" data-slide="next">' +
+                        ' <span class="carousel-control-next-icon" aria-hidden="true"></span>' +
+                        ' <span class="sr-only">Delet</span>' +
+                        ' </a>' +
+                        +'</dt>'
+
+                        );
+                });
+            }
+        });
+    }
+</script>
+
+
+<table class="nehal">
+
+
+    <tbody id="tblInfo9"></tbody>
+
+</table>
+
+

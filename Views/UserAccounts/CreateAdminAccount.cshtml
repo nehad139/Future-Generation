@@ -1,0 +1,111 @@
+﻿@model CustomLogin.Models.Admin
+@{
+    ViewBag.Title = "CreateAdminAccount";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h2>CreateAdminAccount</h2>
+
+
+
+
+<head>
+    <meta charest="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>sign up form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+
+        function validateForm() {
+            var y = document.forms["myForm"]["pass2"].value;
+            var x = document.forms["myForm"]["pass"].value;
+            if (x != y) {
+                alert("pleas repeat  your password again");
+                return false;
+            }
+            else {
+                alert("welcome to our website");
+
+            }
+        }
+
+
+
+        function mOver(obj) {
+
+            obj.style = "color:#f0f3f5; border: 0.5px solid #3e4e5b; background-color:#1e5162; width: 202px; height: 29px; border-radius: 3px;"
+        }
+
+        function mOut(obj) {
+            obj.style = " color: #f0f3f5; border: 0.5px solid #3e4e5b;  background-color: #566d7e; width: 200px;  height: 27px;  border-radius: 3px;"
+        }
+
+
+
+
+    </script>
+    <script type="text/javascript" src="js.js"></script>
+
+    <style>
+        .form-horizontal {
+            width: 30%;
+            height: 650px;
+            position: absolute;
+            text-align: center;
+            background-color: rgba(176, 190, 197,0.3);
+            padding: 40px;
+            top: 20%;
+            left: 30%;
+            border-radius: 25px;
+        }
+
+        input[type="tel"] {
+            color: black;
+            border: 0.5px solid #c2cdd6;
+            background-color: #f0f3f5;
+            height: 25px;
+            width: 195px;
+        }
+    </style>
+</head>
+
+
+@using (Html.BeginForm("CreateAdminAccount", "UserAccounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <h2>Create</h2>
+        <h4>UserAccount</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+  
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" onmouseover="mOver(nehal2)" onmouseout="mOut(nehal2)">
+                <input type="submit" id="nehal2" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+

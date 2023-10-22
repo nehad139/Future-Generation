@@ -1,0 +1,83 @@
+﻿<h2>LoginAsAdmin</h2>
+
+@model CustomLogin.Models.Admin
+@{
+    ViewBag.Title = "LoginAsAdmin";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<head>
+    <style>
+        .form-horizontal {
+            width: 30%;
+            height: 400px;
+            position: absolute;
+            text-align: center;
+            background-color: rgb(176, 190, 197);
+            padding: 40px;
+            top: 32%;
+            left: 30%;
+            border-radius: 25px;
+        }
+    </style>
+
+    <script>
+
+       function mOver(obj) {
+
+           obj.style ="color:#f0f3f5; border: 0.5px solid #3e4e5b; background-color:#1e5162; width: 202px; height: 29px; border-radius: 3px;"
+       }
+
+      function mOut(obj) {
+          obj.style = "color: #f0f3f5;border: 0.5px solid #3e4e5b; background - color: #566d7e;width: 200px;height: 27px;border - radius: 3px;"
+       }
+
+    </script>
+</head>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Login</h2>
+        <h4>AdminAccount</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" onmouseover="mOver(nehal2)" onmouseout="mOut(nehal2)">
+                <input type="submit" id="nehal2" value="Login" class="btn btn-default" />
+            </div>
+        </div>
+        <p>
+            Sign Up As Admin
+            @Html.ActionLink("CreateNew?", "CreateAdminAccount")
+
+        </p>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
