@@ -1,3 +1,3 @@
-﻿SELECT[courseName],[startDate],[endDate],[cost],[Capacity],[Status],[courseSyllaby] FROM [dbo].[courses] WHERE [UserID]=3024AND[OnlyMe] =0
-ALTER DATABASE courses
+﻿ SELECT [friendtow_UserID]FROM [dbo].[friends] WHERE  [fe1]=2024
+ ALTER DATABASE friends
 SET ENABLE_Broker WITH ROLLBACK IMMEDIATE
